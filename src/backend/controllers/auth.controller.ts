@@ -8,21 +8,23 @@ import { asyncHandler } from '../middleware/async';
 // @route   POST /api/auth/register
 // @access  Public
 export const register = asyncHandler(async (req: Request, res: Response) => {
-  const { email, password, name } = req.body;
+  const { Email, Password, Name } = req.body;
+  console.log('Register payload:', req.body);
 
   // Check if user exists
-  const userExists = await User.findOne({ where: { Email: email } });
+  const userExists = await User.findOne({ where: { Email } });
   if (userExists) {
     throw new AppError('User already exists', 400);
   }
 
   // Create user
   const user = await User.create({
-    Email: email,
-    Password: password,
-    Name: name,
+    Email,
+    Password,
+    Name,
     Role: 'customer',
   });
+  console.log('User created:', user.UserID);
 
   // Generate token
   const token = jwt.sign(

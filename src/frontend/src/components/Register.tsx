@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 import { FiMail, FiLock, FiUser, FiAlertCircle } from 'react-icons/fi';
 
 interface RegisterFormInputs {
@@ -38,8 +38,13 @@ const Register: React.FC = () => {
 
   const registerMutation = useMutation({
     mutationFn: async (data: RegisterFormInputs) => {
-      const { ConfirmPassword, ...registerData } = data;
-      const response = await axios.post<RegisterResponse>('/api/auth/register', registerData);
+      // Chỉ gửi đúng 3 trường cho backend
+      const payload = {
+        Name: data.Name,
+        Email: data.Email,
+        Password: data.Password,
+      };
+      const response = await api.post<RegisterResponse>('/auth/register', payload);
       return response.data;
     },
     onSuccess: (data) => {
@@ -83,7 +88,13 @@ const Register: React.FC = () => {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-sm font-medium text-red-800">
-                    Registration failed. Please try again.
+                    {(() => {
+                      const err = registerMutation.error as any;
+                      if (err && err.response && err.response.data && err.response.data.message) {
+                        return err.response.data.message;
+                      }
+                      return 'Registration failed. Please try again.';
+                    })()}
                   </h3>
                 </div>
               </div>
@@ -252,4 +263,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register; 
+export default Register;

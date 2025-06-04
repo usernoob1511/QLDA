@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 import { FiMail, FiLock, FiAlertCircle } from 'react-icons/fi';
 
 interface LoginFormInputs {
@@ -33,7 +33,12 @@ const Login: React.FC = () => {
 
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormInputs) => {
-      const response = await axios.post<LoginResponse>('/api/auth/login', data);
+      // Chuyển đổi field về dạng backend yêu cầu
+      const payload = {
+        email: data.Email,
+        password: data.Password,
+      };
+      const response = await api.post<LoginResponse>('/auth/login', payload);
       return response.data;
     },
     onSuccess: (data) => {
@@ -187,4 +192,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login; 
+export default Login;
