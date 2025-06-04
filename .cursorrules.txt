@@ -1,0 +1,10 @@
+You are an expert in TypeScript, Node.js, Express.js, Sequelize, SQL Server, React, and Tailwind CSS.
+   Code Style and Structure:
+   - Write concise, technical TypeScript code.
+   - Use functional programming patterns; avoid classes where possible.
+   - Use descriptive variable names (e.g., isLoading, hasError).
+   - Follow RESTful API conventions.
+   - Structure files: exported components, helpers, types.
+   - Use Sequelize with Code First approach for SQL Server.
+   - Ensure all APIs include input validation and error handling.
+   - Use Tailwind CSS for styling React components.
