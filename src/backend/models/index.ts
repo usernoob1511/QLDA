@@ -23,7 +23,7 @@ Category.hasMany(Product, {
 
 Product.belongsTo(Category, {
   foreignKey: 'CategoryID',
-  as: 'productCategory'
+  as: 'category'
 });
 
 User.hasMany(Cart, {
@@ -72,4 +72,4 @@ Product.belongsToMany(Order, {
 });
 
 export { User, Product, Category, Cart, Order };
-export { sequelize }; 
+export { sequelize };

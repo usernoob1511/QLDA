@@ -1,5 +1,6 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import { sequelize } from '../config/database';
+import Category from './Category';
 
 interface ProductAttributes {
   ProductID: number;
@@ -77,4 +78,7 @@ Product.init(
   }
 );
 
-export default Product; 
+// XÓA DÒNG NÀY để tránh duplicate alias gây lỗi
+// Product.belongsTo(Category, { foreignKey: 'CategoryID', as: 'category' });
+
+export default Product;

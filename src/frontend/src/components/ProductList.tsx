@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import api from '../api/axios';
 import { FiShoppingCart, FiFilter, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 // Types
@@ -39,7 +39,7 @@ const ProductList: React.FC = () => {
         limit: '12',
         ...(selectedCategory && { categoryId: selectedCategory.toString() }),
       });
-      const response = await axios.get(`/api/products?${params}`);
+      const response = await api.get(`/products?${params}`);
       return response.data;
     },
   });
@@ -47,7 +47,7 @@ const ProductList: React.FC = () => {
   // Add to cart handler
   const handleAddToCart = async (productId: number) => {
     try {
-      await axios.post('/api/cart', {
+      await api.post('/cart', {
         ProductID: productId,
         Quantity: 1,
       });
@@ -167,4 +167,4 @@ const ProductList: React.FC = () => {
   );
 };
 
-export default ProductList; 
+export default ProductList;
